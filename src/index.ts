@@ -4,6 +4,7 @@ import express from "express";
 import cookieParser from "cookie-parser";
 import authRouter from "./routes/auth";
 import { errorHandler } from "./middlewares/error";
+import { fileParser } from "./middlewares/file";
 
 const app = express();
 
@@ -15,10 +16,11 @@ const app = express();
 // });
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser())
+app.use(cookieParser());
 
 app.use("/auth", authRouter);
-app.post("/test", (req, res) => {
+app.post("/test", fileParser, (req, res) => {
+  console.log(req.files);
   console.log(req.body);
   res.json({});
 });
