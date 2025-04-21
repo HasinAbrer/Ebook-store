@@ -4,16 +4,17 @@ import jwt from "jsonwebtoken";
 import UserModel from "src/models/user";
 
 declare global {
-    namespace Express {
-        export interface Request {
-            user: {
-                id: string;
-                name?: string;
-                email: string;
-                role: 'user' | 'author';
-            }
-        }
+  namespace Express {
+    export interface Request {
+      user: {
+        id: string;
+        name?: string;
+        email: string;
+        role: "user" | "author";
+        avatar?:string
+      };
     }
+  }
 }
 
 export const isAuth: RequestHandler = async (req, res, next) => {
@@ -47,5 +48,5 @@ export const isAuth: RequestHandler = async (req, res, next) => {
 
   req.user = formatUserProfile(user);
 
-  next()
+  next();
 };

@@ -4,11 +4,11 @@ import { hashSync, compareSync, genSaltSync } from "bcrypt";
 interface VerificationTokenDoc {
   userId: string;
   token: string;
-  expires: Date
+  expires: Date;
 }
 
 interface Methods {
-  compare(token:string):boolean
+  compare(token: string): boolean;
 }
 
 const verificationTokenSchema = new Schema<VerificationTokenDoc, {}, Methods>({
@@ -45,4 +45,8 @@ const VerificationTokenModel = model(
   verificationTokenSchema
 );
 
-export default VerificationTokenModel as Model<VerificationTokenDoc, {}, Methods>
+export default VerificationTokenModel as Model<
+  VerificationTokenDoc,
+  {},
+  Methods
+>;

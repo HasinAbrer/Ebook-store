@@ -6,7 +6,8 @@ import UserModel from "src/models/user";
 import mail from "src/utils/mail";
 import { formatUserProfile, sendErrorResponse } from "src/utils/helper";
 import jwt from "jsonwebtoken";
-import { profile } from "console";
+import cloudinary from "src/cloud/cloudinary";
+import { updateAvatarToCloudinary } from "src/utils/fileUpload";
 
 export const generateAuthLink: RequestHandler = async (req, res) => {
   // Generate authentication link
@@ -81,7 +82,7 @@ export const verifyAuthToken: RequestHandler = async (req, res) => {
 
   await VerificationTokenModel.findByIdAndDelete(verificationToken._id);
 
-  // Authentication
+  // TODO: authentication
   const payload = { userId: user._id };
 
   const authToken = jwt.sign(payload, process.env.JWT_SECRET!, {
@@ -123,14 +124,22 @@ export const updateProfile: RequestHandler = async (req, res) => {
       new: true,
     }
   );
+
   if (!user)
     return sendErrorResponse({
       res,
-      message: "Something went wrong, user not found!",
+      message: "Something went wrong user not found!",
       status: 500,
     });
 
-    // if there is any file upload them to cloud and update the database
-    
-    res.json({profile: formatUserProfile(user)})     
+  // if there is any file upload them to cloud and update the database
+  const file = req.files.avatar;
+  if (file && !Array.isArray(file)) {
+    // if you are using cloudinary this is the method you should use
+    const avatar = await updateAvatarToCloudinary(file, user.avatar?.id);
+
+    await user.save();
+  }
+
+  res.json({ profile: formatUserProfile(user) });
 };

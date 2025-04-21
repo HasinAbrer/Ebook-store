@@ -6,7 +6,7 @@ export interface UserDoc {
   role: "user" | "author";
   name?: string;
   signedUp: boolean;
-  avater?: { url: string; id: string };
+  avatar?: { url: string; id: string };
 }
 
 const userSchema = new Schema<UserDoc>({
@@ -29,7 +29,7 @@ const userSchema = new Schema<UserDoc>({
     type: Boolean,
     default: false,
   },
-  avater: {
+  avatar: {
     type: Object,
     url: String,
     id: String,
