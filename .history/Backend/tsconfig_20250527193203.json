@@ -1,0 +1,18 @@
+{
+    "compilerOptions": {
+      "module": "CommonJS",
+      "target": "ES2016",
+      "noImplicitAny": true,
+      "removeComments": true,
+      "strict": true,
+      "esModuleInterop": true,
+      "skipLibCheck": true,
+      "forceConsistentCasingInFileNames": true,
+      "rootDir": "Backend/src",
+      "outDir": "./dist",
+      "baseUrl": "./src",
+      "paths": {
+        "@/*": ["*"]
+    }
+    }
+}
