@@ -10,11 +10,11 @@ import { isAuth } from "@/middlewares/auth";
 
 const authRouter = Router();
 
-authRouter.post(
-  "/generate-link",
-  validate(emailValidationSchema),
-  generateAuthLink
-);
+//authRouter.post(
+  //"/generate-link",
+  //validate(emailValidationSchema),
+  //generateAuthLink
+//);
 
 authRouter.get("/verify", verifyAuthToken);
 authRouter.get("/profile", isAuth, sendProfileInfo);

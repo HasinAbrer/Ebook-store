@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Mailtrap Integration</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .login-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            width: 100%;
+            max-width: 400px;
+            animation: slideIn 0.6s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo h1 {
+            color: #333;
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .logo p {
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e1e5e9;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: #fff;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .info-text {
+            margin-bottom: 25px;
+            padding: 16px;
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+
+        .info-text p {
+            color: #4a5568;
+            font-size: 14px;
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .login-btn:active {
+            transform: translateY(0);
+        }
+
+        .login-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .spinner {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #ffffff50;
+            border-top: 2px solid #ffffff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .alert {
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .alert.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .alert.info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .email-sent {
+            text-align: center;
+            padding: 30px 20px;
+        }
+
+        .email-sent .icon {
+            font-size: 48px;
+            color: #667eea;
+            margin-bottom: 20px;
+        }
+
+        .email-sent h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 22px;
+        }
+
+        .email-sent p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .resend-link {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 14px;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+
+        .resend-link:hover {
+            text-decoration: underline;
+        }
+
+        .back-link {
+            color: #666;
+            font-size: 14px;
+            text-decoration: none;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="logo">
+            <h1>Welcome Back</h1>
+            <p>Enter your email to receive a login link</p>
+        </div>
+
+        <div id="alert" class="alert"></div>
+
+        <div id="loginSection">
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" required autocomplete="email" placeholder="Enter your email address">
+                </div>
+
+                <div class="info-text">
+                    <p>📧 We'll send you a secure login link via email. No password required!</p>
+                </div>
+
+                <button type="submit" class="login-btn" id="loginBtn">
+                    <span class="spinner" id="spinner"></span>
+                    <span id="btnText">Send Login Link</span>
+                </button>
+            </form>
+        </div>
+
+        <div id="emailSentSection" class="hidden">
+            <div class="email-sent">
+                <div class="icon">📧</div>
+                <h3>Check Your Email</h3>
+                <p id="emailSentMessage">We've sent a login link to your email address. Click the link to sign in securely.</p>
+                <p style="font-size: 14px; color: #888; margin-bottom: 20px;">
+                    Didn't receive the email? Check your spam folder.
+                </p>
+                <a href="#" class="resend-link" onclick="resendEmail()">Resend login link</a>
+                <br>
+                <a href="#" class="back-link" onclick="goBack()">← Back to login</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Configuration - Update this to match your backend
+        const API_BASE_URL = 'http://localhost:3000/api'; // Change this to your backend URL
+        const SEND_MAGIC_LINK_ENDPOINT = '/send-magic-link'; // Update endpoint as needed
+
+        // DOM elements
+        const loginForm = document.getElementById('loginForm');
+        const emailInput = document.getElementById('email');
+        const loginBtn = document.getElementById('loginBtn');
+        const spinner = document.getElementById('spinner');
+        const btnText = document.getElementById('btnText');
+        const alert = document.getElementById('alert');
+        const loginSection = document.getElementById('loginSection');
+        const emailSentSection = document.getElementById('emailSentSection');
+        const emailSentMessage = document.getElementById('emailSentMessage');
+
+        let userEmail = '';
+        let resendTimer = null;
+        let resendCooldown = 0;
+
+        // Show/hide alert messages
+        function showAlert(message, type = 'error') {
+            alert.textContent = message;
+            alert.className = `alert ${type}`;
+            alert.style.display = 'block';
+
+            if (type === 'success') {
+                setTimeout(() => {
+                    hideAlert();
+                }, 3000);
+            }
+        }
+
+        function hideAlert() {
+            alert.style.display = 'none';
+        }
+
+        // Show loading state
+        function setLoading(loading) {
+            if (loading) {
+                loginBtn.disabled = true;
+                spinner.style.display = 'inline-block';
+                btnText.textContent = 'Sending...';
+            } else {
+                loginBtn.disabled = false;
+                spinner.style.display = 'none';
+                btnText.textContent = 'Send Login Link';
+            }
+        }
+
+        // Show email sent screen
+        function showEmailSent(email) {
+            loginSection.classList.add('hidden');
+            emailSentSection.classList.remove('hidden');
+            emailSentMessage.textContent = `We've sent a login link to ${email}. Click the link to sign in securely.`;
+            userEmail = email;
+            startResendCooldown();
+        }
+
+        // Go back to login form
+        function goBack() {
+            emailSentSection.classList.add('hidden');
+            loginSection.classList.remove('hidden');
+            hideAlert();
+        }
+
+        // Start resend cooldown
+        function startResendCooldown() {
+            resendCooldown = 60; // 60 seconds cooldown
+            const resendLink = document.querySelector('.resend-link');
+
+            function updateResendButton() {
+                if (resendCooldown > 0) {
+                    resendLink.textContent = `Resend in ${resendCooldown}s`;
+                    resendLink.style.pointerEvents = 'none';
+                    resendLink.style.opacity = '0.6';
+                    resendCooldown--;
+                } else {
+                    resendLink.textContent = 'Resend login link';
+                    resendLink.style.pointerEvents = 'auto';
+                    resendLink.style.opacity = '1';
+                    clearInterval(resendTimer);
+                    resendTimer = null;
+                }
+            }
+
+            updateResendButton();
+            resendTimer = setInterval(updateResendButton, 1000);
+        }
+
+        // Email validation
+        function isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+
+        // Handle form submission
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            hideAlert();
+
+            const email = emailInput.value.trim();
+
+            if (!email) {
+                showAlert('Please enter your email address.');
+                return;
+            }
+
+            if (!isValidEmail(email)) {
+                showAlert('Please enter a valid email address.');
+                return;
+            }
+
+            setLoading(true);
+
+            try {
+                const response = await fetch(`${API_BASE_URL}${SEND_MAGIC_LINK_ENDPOINT}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        email: email
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    showEmailSent(email);
+                } else {
+                    if (response.status === 404) {
+                        showAlert('No account found with this email address.');
+                    } else if (response.status === 429) {
+                        showAlert('Too many requests. Please wait before requesting another link.');
+                    } else {
+                        showAlert(data.message || 'Failed to send login link. Please try again.');
+                    }
+                }
+            } catch (error) {
+                console.error('Send magic link error:', error);
+                showAlert('Network error. Please check your connection and try again.');
+            } finally {
+                setLoading(false);
+            }
+        });
+
+        // Resend email function
+        async function resendEmail() {
+            if (resendCooldown > 0) return;
+
+            hideAlert();
+
+            try {
+                const response = await fetch(`${API_BASE_URL}${SEND_MAGIC_LINK_ENDPOINT}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        email: userEmail
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    showAlert('New login link sent successfully!', 'success');
+                    startResendCooldown();
+                } else {
+                    showAlert(data.message || 'Failed to resend login link.');
+                }
+            } catch (error) {
+                console.error('Resend error:', error);
+                showAlert('Network error. Please try again.');
+            }
+        }
+
+        // Clear alerts when user starts typing
+        emailInput.addEventListener('input', hideAlert);
+
+        // Focus on email input when page loads
+        window.addEventListener('load', () => {
+            emailInput.focus();
+        });
+    </script>
+</body>
+</html>

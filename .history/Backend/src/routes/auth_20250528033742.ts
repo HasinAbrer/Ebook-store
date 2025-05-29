@@ -10,7 +10,7 @@ import { isAuth } from "@/middlewares/auth";
 
 const authRouter = Router();
 
-authRouter.post(
+//authRouter.post(
   "/generate-link",
   validate(emailValidationSchema),
   generateAuthLink

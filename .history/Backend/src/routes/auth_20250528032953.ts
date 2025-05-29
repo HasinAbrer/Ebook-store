@@ -16,6 +16,13 @@ authRouter.post(
   generateAuthLink
 );
 
+// Example verification endpoint
+AuthRouter.get('/verify-token', async (req, res) => {
+  const { token } = req.query;
+  // Verify token logic...
+  res.redirect('http://localhost:3000/dashboard');
+});
+
 authRouter.get("/verify", verifyAuthToken);
 authRouter.get("/profile", isAuth, sendProfileInfo);
 authRouter.post("/logout", isAuth, logout);

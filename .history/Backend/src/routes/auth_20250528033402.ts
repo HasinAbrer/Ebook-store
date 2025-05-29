@@ -16,6 +16,8 @@ authRouter.post(
   generateAuthLink
 );
 
+auth
+
 authRouter.get("/verify", verifyAuthToken);
 authRouter.get("/profile", isAuth, sendProfileInfo);
 authRouter.post("/logout", isAuth, logout);

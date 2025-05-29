@@ -16,6 +16,15 @@ authRouter.post(
   generateAuthLink
 );
 
+authouter.get('/verify-token', (req, res) => {
+  const { token, userId } = req.query;
+
+  // Verify token logic...
+
+  // Redirect to frontend after verification
+  res.redirect('http://localhost:3000/dashboard');
+});
+
 authRouter.get("/verify", verifyAuthToken);
 authRouter.get("/profile", isAuth, sendProfileInfo);
 authRouter.post("/logout", isAuth, logout);
