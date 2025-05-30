@@ -43,15 +43,10 @@ return (
 
         <form onSubmit={handleSubmit} className="w-full space-y-6 mt-6">
           <Input
+            type="email"
             label="Email"
             placeholder="my@email.com"
             variant="bordered"
-             isInvalid={invalidForm}
-            errorMessage="Invalid email!"
-            value={email}
-            onChange={({ target }) => {
-              setEmail(target.value);
-            }}
           />
           <Button type="submit" className="w-full">
             Send Me The Link

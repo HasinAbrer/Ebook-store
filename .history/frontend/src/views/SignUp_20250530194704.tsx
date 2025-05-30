@@ -11,7 +11,7 @@ const emailRegex = new RegExp(
 
 
 const SignUp: FC<Props> = () => {
-     const [email, setEmail] = useState("");
+     const [email, setEmail] = useState("");Add commentMore actions
   const [invalidForm, setInvalidForm] = useState(false);
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (evt) => {
@@ -31,7 +31,7 @@ const SignUp: FC<Props> = () => {
       console.log(error);
     }
   };
-
+Add comment
 return (
     <div className="flex-1 flex items-center justify-center">
       <div className="flex flex-col items-center justify-center w-96 border-2 p-5 rounded-md">
@@ -41,17 +41,12 @@ return (
           potential.
         </h1>
 
-        <form onSubmit={handleSubmit} className="w-full space-y-6 mt-6">
+        <form className="w-full space-y-6 mt-6">
           <Input
+            type="email"
             label="Email"
             placeholder="my@email.com"
             variant="bordered"
-             isInvalid={invalidForm}
-            errorMessage="Invalid email!"
-            value={email}
-            onChange={({ target }) => {
-              setEmail(target.value);
-            }}
           />
           <Button type="submit" className="w-full">
             Send Me The Link

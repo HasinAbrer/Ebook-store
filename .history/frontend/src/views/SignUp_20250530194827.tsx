@@ -43,10 +43,11 @@ return (
 
         <form onSubmit={handleSubmit} className="w-full space-y-6 mt-6">
           <Input
+            type="email"
             label="Email"
             placeholder="my@email.com"
             variant="bordered"
-             isInvalid={invalidForm}
+             isInvalid={invalidForm}Add commentMore actions
             errorMessage="Invalid email!"
             value={email}
             onChange={({ target }) => {

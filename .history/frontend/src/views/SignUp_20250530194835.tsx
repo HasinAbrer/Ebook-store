@@ -46,7 +46,7 @@ return (
             label="Email"
             placeholder="my@email.com"
             variant="bordered"
-             isInvalid={invalidForm}
+             isInvalid={invalidForm}Add commentMore actions
             errorMessage="Invalid email!"
             value={email}
             onChange={({ target }) => {
