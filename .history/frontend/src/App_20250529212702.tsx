@@ -1,0 +1,15 @@
+import { Routes, Route } from 'react-router-dom';
+import { FC } from 'react';
+import Home from './views/Home';
+import SignUp from './views/SignUp';
+
+const App: FC = () => {
+    return (
+        <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/signup" element={<SignUp />} />
+        </Routes>
+    );
+};
+
+export default App;
