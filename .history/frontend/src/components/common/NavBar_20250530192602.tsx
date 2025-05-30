@@ -31,7 +31,7 @@ const Navbar: FC<Props> = () => {
             </Badge>
           </Link>
         </NavbarItem>
-          <NavbarItem>
+          <NavbarItem>Add commentMore actions
           <ProfileOptions />
         </NavbarItem>
       </NavbarContent>

@@ -31,9 +31,7 @@ const Navbar: FC<Props> = () => {
             </Badge>
           </Link>
         </NavbarItem>
-          <NavbarItem>
-          <ProfileOptions />
-        </NavbarItem>
+        
       </NavbarContent>
     </NextUINav>
   );
