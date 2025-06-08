@@ -1,1 +1,0 @@
- <a href="http://localhost:5000/auth/generate-link"> 
