@@ -91,7 +91,7 @@ const Navbar = () => {
               cartItems.length > 0 ? <span className="text-sm font semibold sm:ml-1">{cartItems.length}</span> : <span className="text-sm font semibold sm:ml-1">0</span>
             }
             
-            <span className="text-sm font semibold sm:ml-1">0</span>
+            {/* <span className="text-sm font semibold sm:ml-1">0</span> */}
 
           </Link>
         </div>
