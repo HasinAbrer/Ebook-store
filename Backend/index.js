@@ -1,6 +1,21 @@
-const express = require("express");
+const express = require('express');
+const cors = require('cors');
+
 const app = express();
-const cors = require("cors");
+
+const allowedOrigins = ['http://localhost:5173', 'http://localhost:5174'];
+
+app.use(cors({
+  origin: function(origin, callback) {
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.indexOf(origin) === -1) {
+      return callback(new Error('Not allowed by CORS'));
+    }
+    return callback(null, true);
+  },
+  credentials: true,
+}));
+
 
 const mongoose = require("mongoose");
 
