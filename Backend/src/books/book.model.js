@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const bookSchema = new mongoose.Schema99({
+const bookSchema = new mongoose.Schema({
   title: {
     type: String,
     required: true,
