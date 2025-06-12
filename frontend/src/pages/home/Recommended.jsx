@@ -1,18 +1,17 @@
-
+import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Navigation } from "swiper/modules";
+import { useFetchAllBooksQuery } from "../../redux/features/books/booksApi";
 
-// Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import BookCard from "../books/BookCard";
-import { useFetchAllBooksQuery } from "../../redux/features/cart/booksApi";
-
 
 const Recommended = () => {
+  const { data } = useFetchAllBooksQuery();
 
-   const {data:books =[] } = useFetchAllBooksQuery();
+  const books = data?.books || [];
 
   return (
     <div className="py-16">
@@ -43,12 +42,13 @@ const Recommended = () => {
         modules={[Pagination, Navigation]}
         className="mySwiper"
       >
-        {books.length > 0 &&
-          books.slice(8, 18).map((book, index) => (
-            <SwiperSlide key={index}>
-              <BookCard book={book} />
-            </SwiperSlide>
-          ))}
+        {books.length > 0
+          ? books.slice(8, 18).map((book, index) => (
+              <SwiperSlide key={index}>
+                <BookCard book={book} />
+              </SwiperSlide>
+            ))
+          : <p className="text-center w-full">No recommended books found.</p>}
       </Swiper>
     </div>
   );

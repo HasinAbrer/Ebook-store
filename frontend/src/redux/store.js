@@ -1,6 +1,6 @@
-import { configureStore } from '@reduxjs/toolkit'
-import cartReducer from './features/cart/cartSlice'
-import  booksApi from './features/cart/booksApi';
+import { configureStore } from '@reduxjs/toolkit';
+import cartReducer from './features/cart/cartSlice';
+import booksApi from './features/books/booksApi';
 
 export const store = configureStore({
   reducer: {
@@ -9,4 +9,4 @@ export const store = configureStore({
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(booksApi.middleware),
-})
+});

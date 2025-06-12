@@ -13,6 +13,7 @@ const CheckoutPage = () => {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm();
 
@@ -97,7 +98,7 @@ const CheckoutPage = () => {
                         {...register("phone", {
                           required: "Phone number is required",
                           pattern: {
-                            value: /^\+?[0-9\s-]{7,15}$/,
+                            value: /^\+?[0-9\s\-]{7,15}$/,
                             message: "Invalid phone number format",
                           },
                         })}
