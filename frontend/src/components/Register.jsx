@@ -12,24 +12,22 @@ const Register = () => {
     const navigate = useNavigate();
 
     // console.log(registerUser)
-    const {
-        register,
-        handleSubmit,
-        watch,
-      } = useForm()
+   const {
+  register,
+  handleSubmit,
+  formState: { errors },
+} = useForm();
 
-    //   register user
-
-      const onSubmit = async(data) => {
-        // console.log(data)
-        try {
-            await registerUser(data.email, data.password);
-            alert("User registered successfully!")
-        } catch (error) {
-           setMessage("Please provide a valid email and password")
-           console.error(error)
-        }
-      }
+const onSubmit = async(data) => {
+  try {
+    await registerUser(data.email, data.password);
+    alert("User registered successfully!");
+    setMessage("");
+  } catch (error) {
+    setMessage(error.message);
+    console.error(error);
+  }
+};
 
       const handleGoogleSignIn = async() => {
         try {
@@ -88,4 +86,4 @@ const Register = () => {
   )
 }
 
-export default Register
+export default Register;
