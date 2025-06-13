@@ -22,7 +22,7 @@ const orderRoutes = require("./src/orders/order.route");
 const userRoutes = require("./src/users/user.route");
 app.use("/api/books", bookRoutes);
 app.use("/api/orders", orderRoutes);
-app.use("/api/users", userRoutes);
+
 
 async function main() {
   await mongoose.connect(process.env.MONGO_URI);
