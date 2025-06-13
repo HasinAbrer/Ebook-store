@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import BookCard from "../books/BookCard";
-import { useRef } from "react";
-// Import Swiper React components
+import { useFetchAllBooksQuery } from "../../redux/features/books/booksApi";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Navigation } from "swiper/modules";
 
-// Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
@@ -19,35 +17,31 @@ const categories = [
 ];
 
 const TopSellers = () => {
-  const [books, setBooks] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("Choose a genre");
+  const { data } = useFetchAllBooksQuery();
 
-  useEffect(() => {
-    fetch("books.json")
-      .then((res) => res.json())
-      .then((data) => setBooks(data));
-  }, []);
+  const books = data?.books || [];
 
   const filteredBooks =
-    selectedCategory === "Choose a genre"
-      ? books
-      : books.filter(
-          (book) => book.category === selectedCategory.toLowerCase()
-        );
-
-  console.log(filteredBooks);
+    Array.isArray(books) && selectedCategory !== "Choose a genre"
+      ? books.filter(
+          (book) =>
+            book.category &&
+            book.category.toLowerCase() === selectedCategory.toLowerCase()
+        )
+      : books;
 
   return (
     <div className="py-10">
       <h2 className="text-3xl font-semibold mb-6">Top Sellers</h2>
 
-      {/* category filtering */}
       <div className="mb-8 flex items-center">
         <select
-          onChangeCapture={(e) => setSelectedCategory(e.target.value)}
+          onChange={(e) => setSelectedCategory(e.target.value)}
           name="category"
           id="category"
           className="border bg-[#EAEAEA] border-gray-300 rounded-md px-4 py-2 focus:outline-none"
+          value={selectedCategory}
         >
           {categories.map((category, index) => (
             <option key={index} value={category}>
@@ -82,12 +76,15 @@ const TopSellers = () => {
         modules={[Pagination, Navigation]}
         className="mySwiper"
       >
-        {filteredBooks.length > 0 &&
+        {filteredBooks.length > 0 ? (
           filteredBooks.map((book, index) => (
             <SwiperSlide key={index}>
               <BookCard book={book} />
             </SwiperSlide>
-          ))}
+          ))
+        ) : (
+          <p className="text-center w-full">No books found for this category.</p>
+        )}
       </Swiper>
     </div>
   );
