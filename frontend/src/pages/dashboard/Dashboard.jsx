@@ -9,6 +9,8 @@ import RevenueChart from './RevenueChart';
 const Dashboard = () => {
     const [loading, setLoading] = useState(true);
     const [data, setData] = useState({});
+      const [users, setUsers] = useState([]);  // This line initializes the 'users' state
+    const [loadingUsers, setLoadingUsers] = useState(true);
     // console.log(data)
     useEffect(() => {
         const fetchData = async () => {
@@ -31,6 +33,29 @@ const Dashboard = () => {
     }, []);
 
     // console.log(data)
+
+        // Fetch all users
+    useEffect(() => {
+        const fetchUsers = async () => {
+            try {
+                const response = await axios.get(`${getBaseUrl()}/api/users/allUsers`, {
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                        'Content-Type': 'application/json',
+                    },
+                });
+
+                setUsers(response.data);
+                setLoadingUsers(false);
+            } catch (error) {
+                console.error('Error fetching users:', error);
+            }
+        }
+
+        fetchUsers();
+    }, []);
+
+    console.log(users);
 
     if(loading) return <Loading/>
 
@@ -186,6 +211,25 @@ const Dashboard = () => {
                   </ul>
                 </div>
               </div>
+
+                        {/* New Users Section */}
+          <div className="flex flex-col row-span-3 bg-white shadow rounded-lg">
+              <div className="px-6 py-5 font-semibold border-b border-gray-100">All Users</div>
+              <div className="overflow-y-auto" style={{maxHeight: '24rem'}}>
+                  <ul className="p-6 space-y-6">
+                      {users.map(user => (
+                          <li key={user._id} className="flex items-center">
+                              <div className="h-10 w-10 mr-3 bg-gray-100 rounded-full overflow-hidden">
+                                  <img src={user.profilePicture || 'https://randomuser.me/api/portraits/men/75.jpg'} alt={`${user.name} profile`} />
+                              </div>
+                              <span className="text-gray-600">{user.name}</span>
+                              <span className="ml-auto font-semibold">{user.email}</span>
+                          </li>
+                      ))}
+                  </ul>
+              </div>
+          </div>
+
               <div className="flex flex-col row-span-3 bg-white shadow rounded-lg">
                 <div className="px-6 py-5 font-semibold border-b border-gray-100">Students by type of studying</div>
                 <div className="p-4 flex-grow">
@@ -193,6 +237,7 @@ const Dashboard = () => {
                 </div>
               </div>
             </section>
+
     </>
   )
 }

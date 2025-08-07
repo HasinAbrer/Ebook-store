@@ -1,6 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
+import { browserLocalPersistence, getAuth } from "firebase/auth";
+import { setPersistence, inMemoryPersistence } from "firebase/auth"; // Import persistence options
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -16,4 +17,12 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-export const auth = getAuth(app);
+const auth = getAuth(app);
+
+//used this for logged out state in the restarting of the app,as i am using firebase for authentication
+setPersistence(auth, browserLocalPersistence) // or use browserSessionPersistence
+  .catch((error) => {
+    console.error("Persistence error", error);
+  });
+
+export { app, auth };
