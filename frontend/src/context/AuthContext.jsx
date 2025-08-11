@@ -24,6 +24,7 @@ export const AuthProvider = ({children}) => {
     // login the user
     const loginUser = async (email, password) => {
 
+        localStorage.setItem("login",true);
         return await signInWithEmailAndPassword(auth, email, password)
     }
 

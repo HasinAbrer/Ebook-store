@@ -1,10 +1,13 @@
 const express =  require('express');
 const User = require('./user.model');
 const jwt = require('jsonwebtoken');
+const { getUserById } = require('./user.controller');
 
 const router =  express.Router();
 
 const JWT_SECRET = process.env.JWT_SECRET_KEY
+
+router.get('/:id', getUserById);
 
 router.post("/admin", async (req, res) => {
     const {username, password} = req.body;

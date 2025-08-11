@@ -17,10 +17,13 @@ const categories = [
 ];
 
 const TopSellers = () => {
+
   const [selectedCategory, setSelectedCategory] = useState("Choose a genre");
   const { data } = useFetchAllBooksQuery();
 
   const books = data?.books || [];
+
+  console.log("books:", books);
 
   const filteredBooks =
     Array.isArray(books) && selectedCategory !== "Choose a genre"
