@@ -1,14 +1,19 @@
 import React from 'react'
 import { useGetOrderByEmailQuery } from '../../redux/features/orders/ordersApi'
 import { useAuth } from '../../context/AuthContext';
+import { useSelector } from 'react-redux';
 
 const OrderPage = () => {
     const { currentUser} = useAuth()
+    const authUser = useSelector(state => state.auth.user);
+    // Orders are saved with authenticated identity from JWT: decoded.email || decoded.username
+    const identity = currentUser?.email || authUser?.username || '';
 
+    const { data: orders = [], isLoading, isError } = useGetOrderByEmailQuery(identity, { skip: !identity });
 
-    const { data: orders = [], isLoading, isError } = useGetOrderByEmailQuery(currentUser.email);
     if (isLoading) return <div>Loading...</div>
-    if (isError) return <div>Error geting orders data</div>
+    if (isError) return <div>Error getting orders data</div>
+
     return (
         <div className='container mx-auto p-6'>
             <h2 className='text-2xl font-semibold mb-4'>Your Orders</h2>

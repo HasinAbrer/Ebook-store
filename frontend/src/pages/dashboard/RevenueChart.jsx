@@ -1,27 +1,45 @@
 // src/components/RevenueChart.jsx
 import React from 'react';
-import { Bar } from 'react-chartjs-2';
-import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
+import { Line } from 'react-chartjs-2';
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+} from 'chart.js';
 
 // Register Chart.js components
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
-const RevenueChart = () => {
+const RevenueChart = ({ monthlySales = [] }) => {
+  const chartLabels = monthlySales.map(item => {
+    const [year, month] = item._id.split('-');
+    return new Date(year, month - 1).toLocaleString('default', { month: 'short', year: 'numeric' });
+  });
 
-
-
-
-  const revenueData = [500, 700, 800, 600, 750, 900, 650, 870, 960, 1020, 1100, 1150];;
+  const chartDataPoints = monthlySales.map(item => item.totalSales);
 
   const data = {
-    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+    labels: chartLabels,
     datasets: [
       {
-        label: 'Revenue (USD)',
-        data: revenueData,
-        backgroundColor: 'rgba(34, 197, 94, 0.7)',
-        borderColor: 'rgba(34, 197, 94, 1)',
-        borderWidth: 1,
+        label: 'Total Sales',
+        data: chartDataPoints,
+        fill: false,
+        borderColor: 'rgb(75, 192, 192)',
+        tension: 0.1,
       },
     ],
   };
@@ -33,8 +51,7 @@ const RevenueChart = () => {
         position: 'top',
       },
       title: {
-        display: true,
-        text: 'Monthly Revenue',
+        display: false,
       },
     },
     scales: {
@@ -45,11 +62,8 @@ const RevenueChart = () => {
   };
 
   return (
-    <div className="w-full max-w-3xl mx-auto p-4 bg-white shadow-lg rounded-lg">
-      <h2 className="text-center text-2xl font-bold text-gray-800 mb-4">Monthly Revenue</h2>
-      <div className='hidden md:block'>
-      <Bar data={data} options={options} className='' />
-      </div>
+    <div className='h-full w-full'>
+      <Line data={data} options={options} />
     </div>
   );
 };

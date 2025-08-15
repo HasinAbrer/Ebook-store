@@ -1,14 +1,16 @@
 import React, { useState } from 'react'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from "react-hook-form"
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 
 import Swal from'sweetalert2';
 import { useCreateOrderMutation } from '../../redux/features/orders/ordersApi';
+import { clearCart } from '../../redux/features/cart/cartSlice';
 
 const CheckoutPage = () => {
     const cartItems = useSelector(state => state.cart.cartItems);
+    const authUser = useSelector(state => state.auth.user);
     const totalPrice = cartItems.reduce((acc, item) => acc + item.newPrice, 0).toFixed(2);
     const {  currentUser} = useAuth()
     const {
@@ -20,41 +22,43 @@ const CheckoutPage = () => {
 
     const [createOrder, {isLoading, error}] = useCreateOrderMutation();
     const navigate =  useNavigate()
+    const dispatch = useDispatch();
 
     const [isChecked, setIsChecked] = useState(false)
     const onSubmit = async (data) => {
 
         const newOrder = {
             name: data.name,
-            email: currentUser?.email,
+            // Do NOT send email from client; backend will use authenticated user email
             address: {
+                line1: data.address,
                 city: data.city,
                 country: data.country,
                 state: data.state,
                 zipcode: data.zipcode
-
             },
             phone: data.phone,
-            productIds: cartItems.map(item => item?._id),
-            totalPrice: totalPrice,
+            productIds: cartItems.map(item => item?._id || item?.id).filter(Boolean),
+            totalPrice: Number(totalPrice),
         }
 
         try {
             await createOrder(newOrder).unwrap();
-            Swal.fire({
-                title: "Confirmed Order",
-                text: "Your order placed successfully!",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#3085d6",
-                cancelButtonColor: "#d33",
-                confirmButtonText: "Yes, It's Okay!"
-              });
-              navigate("/orders")
+            // Clear cart on success
+            dispatch(clearCart());
+            await Swal.fire({
+                title: "Order Placed",
+                text: "Your order was placed successfully!",
+                icon: "success",
+                timer: 1500,
+                showConfirmButton: false
+            });
+            navigate("/orders")
         } catch (error) {
             console.error("Error place an order", error);
-            alert("Failed to place an order")
+            Swal.fire('Order Failed', error?.data?.message || 'Failed to place an order', 'error');
         }
+
     }
 
     if(isLoading) return <div>Loading....</div>
@@ -89,17 +93,18 @@ const CheckoutPage = () => {
                                             <div className="md:col-span-5">
                                                 <label html="email">Email Address</label>
                                                 <input
-
-                                                    type="text" name="email" id="email" className="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
-                                                    disabled
-                                                    defaultValue={currentUser?.email}
+                                                    type="text"
+                                                    className="h-10 border mt-1 rounded px-4 w-full bg-gray-100"
+                                                    value={currentUser?.email || authUser?.email || ''}
+                                                    readOnly
                                                     placeholder="email@domain.com" />
+                                                <p className="text-xs text-gray-500 mt-1">Email comes from your account and is used automatically for the order.</p>
                                             </div>
                                             <div className="md:col-span-5">
                                                 <label html="phone">Phone Number</label>
                                                 <input
                                                     {...register("phone", { required: true })}
-                                                    type="number" name="phone" id="phone" className="h-10 border mt-1 rounded px-4 w-full bg-gray-50" placeholder="+123 456 7890" />
+                                                    type="tel" name="phone" id="phone" className="h-10 border mt-1 rounded px-4 w-full bg-gray-50" placeholder="+123 456 7890" />
                                             </div>
 
                                             <div className="md:col-span-3">

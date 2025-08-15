@@ -1,11 +1,12 @@
-import {createBrowserRouter} from "react-router-dom";
+import {createBrowserRouter, Navigate} from "react-router-dom";
 import App from "../App";
 import Home from "../pages/home/Home";
 import Login from "../components/Login";
 import Register from "../components/Register";
 import CartPage from "../pages/books/CartPage";
 import CheckoutPage from "../pages/books/CheckoutPage";
-import SingleBook from "../pages/books/SingleBook";
+import SingleBook from '../pages/books/SingleBook';
+import ContactUs from '../pages/contact/ContactUs';
 import PrivateRoute from "./PrivateRoute";
 import OrderPage from "../pages/books/OrderPage";
 import AdminRoute from "./AdminRoute";
@@ -16,6 +17,14 @@ import ManageBooks from "../pages/dashboard/ManageBooks/ManageBooks";
 import AddBook from "../pages/dashboard/AddBook/AddBook";
 import UpdateBook from "../pages/dashboard/EditBook/UpdateBook";
 import UserDashboard from "../pages/dashboard/users/UserDashboard";
+import AdminOrders from "../pages/dashboard/orders/AdminOrders";
+import ManageUsers from '../pages/dashboard/users/ManageUsers';
+import ManageReviews from '../pages/dashboard/reviews/ManageReviews';
+import ManageMessages from '../pages/dashboard/messages/ManageMessages';
+import Settings from '../pages/dashboard/Settings';
+import Profile from "../pages/profile/Profile";
+import Search from "../pages/books/Search";
+// removed direct MyMessages route; using ContactUs as unified messages hub
 
 const router = createBrowserRouter([
     {
@@ -55,8 +64,24 @@ const router = createBrowserRouter([
           element: <SingleBook/>
         },
         {
+          path: "/search",
+          element: <Search/>
+        },
+        {
+          path: "/contact-us",
+          element: <PrivateRoute><ContactUs/></PrivateRoute>
+        },
+        {
           path: "/user-dashboard",
           element: <PrivateRoute><UserDashboard/></PrivateRoute>
+        },
+        {
+          path: "/profile",
+          element: <PrivateRoute><Profile/></PrivateRoute>
+        },
+        {
+          path: "/messages",
+          element: <Navigate to="/contact-us" replace />
         }
 
       ]
@@ -92,6 +117,30 @@ const router = createBrowserRouter([
           element: <AdminRoute>
             <ManageBooks/>
           </AdminRoute>
+        },
+        {
+          path: "orders",
+          element: <AdminRoute>
+            <AdminOrders/>
+          </AdminRoute>
+        },
+        {
+          path: "users",
+          element: <AdminRoute>
+            <ManageUsers/>
+          </AdminRoute>
+        },
+        {
+          path: "reviews",
+          element: <AdminRoute><ManageReviews /></AdminRoute>
+        },
+        {
+          path: "messages",
+          element: <AdminRoute><ManageMessages /></AdminRoute>
+        },
+        {
+          path: "settings",
+          element: <AdminRoute><Settings /></AdminRoute>
         }
       ]
     }

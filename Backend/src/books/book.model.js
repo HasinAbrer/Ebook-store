@@ -30,9 +30,21 @@ const bookSchema = new mongoose.Schema({
       type: Number,
       required: true,
     },
-    createdAt: {
-      type: Date,
-      default: Date.now,
+    stock: {
+      type: Number,
+      default: 0,
+    },
+    totalSold: {
+      type: Number,
+      default: 0,
+    },
+    ratingAvg: {
+      type: Number,
+      default: 0,
+    },
+    ratingCount: {
+      type: Number,
+      default: 0,
     },
   },
   {

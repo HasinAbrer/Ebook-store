@@ -20,17 +20,27 @@ const orderSchema = new mongoose.Schema({
         state: String,
         zipcode: String,
     },
+    // Store phone numbers as strings to preserve formatting like leading zeros or + sign
     phone: {
-        type: Number,
+        type: String,
         required: true,
     },
     productIds:[
         {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'Product',
+            ref: 'Book',
             required: true
         }
-    ]
+    ],
+    totalPrice: {
+        type: Number,
+        required: true
+    },
+    status: {
+        type: String,
+        enum: ['pending', 'processing', 'shipped', 'delivered', 'cancelled'],
+        default: 'pending'
+    }
 }, {
     timestamps: true
 })

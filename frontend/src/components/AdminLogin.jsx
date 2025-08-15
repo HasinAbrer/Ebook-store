@@ -4,9 +4,12 @@ import axios from "axios";
 import getBaseUrl from '../utils/baseURL';
 import { Navigate } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from 'react-redux';
+import { setUser, clearUser } from '../redux/features/auth/authSlice';
 
 const AdminLogin = () => {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const [message, setMessage] = useState("");
 
  const {
@@ -26,15 +29,25 @@ const AdminLogin = () => {
             const auth = response.data;
             console.log(auth);
             if(auth.token){
-                localStorage.setItem('token',auth.token);
+                // Store admin token under a separate key to avoid user/admin cross-over
+                localStorage.setItem('admin_token', auth.token);
+                dispatch(setUser({ 
+                    user: auth.user, 
+                    token: auth.token 
+                }));
+                
+                // Navigate to admin dashboard immediately
+                navigate("/dashboard");
+                
+                // Session expiry after 1 hour
                 setTimeout(() => {
-                    localStorage.removeItem('token')
-                    alert("Session expired, please login again")
-                    navigate("/dashboard")
-                },3600*1000)
+                    localStorage.removeItem('admin_token');
+                    dispatch(clearUser());
+                    alert("Session expired, please login again");
+                    navigate("/admin");
+                }, 3600*1000)
             }
-            alert(" Admin Login successful!");
-            // navigate("/")
+            alert("Admin Login successful!");
         } catch (error) {
             setMessage("Please provide a valid email and password")
             console.error(error)

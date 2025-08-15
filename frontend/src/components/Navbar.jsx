@@ -1,16 +1,17 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { HiMiniBars3CenterLeft, HiOutlineHeart, HiOutlineShoppingCart } from "react-icons/hi2";
 import { IoSearchOutline } from "react-icons/io5";
 import { HiOutlineUser } from "react-icons/hi";
 
 import avatarImg from "../assets/avatar.png"
 import { useState } from "react";
-import { useSelector } from "react-redux";
-import { useAuth } from "../context/AuthContext";
+import { useSelector, useDispatch } from "react-redux";
+import { clearUser } from "../redux/features/auth/authSlice";
 
 const navigation = [
     {name: "Dashboard", href:"/user-dashboard"},
     {name: "Orders", href:"/orders"},
+    {name: "Contact Us", href:"/contact-us"},
     {name: "Cart Page", href:"/cart"},
     {name: "Check Out", href:"/checkout"},
 ]
@@ -18,15 +19,20 @@ const navigation = [
 const Navbar = () => {
 
     const  [isDropdownOpen, setIsDropdownOpen] = useState(false)
+    const [search, setSearch] = useState("");
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
     const cartItems = useSelector(state => state.cart.cartItems);
+    const { user, token } = useSelector(state => state.auth);
 
-    const {currentUser, logout} = useAuth()
+    // For regular users, we'll use a simple approach since this is mainly for admin functionality
+    const currentUser = user;
 
     const handleLogOut = () => {
-        logout()
+        localStorage.removeItem('token');
+        dispatch(clearUser());
+        navigate('/');
     }
-
-    const token = localStorage.getItem('token');
 
     return (
         <header className="max-w-screen-2xl mx-auto px-4 py-6">
@@ -38,14 +44,23 @@ const Navbar = () => {
                     </Link>
 
                     {/* search input */}
-                    <div className="relative sm:w-72 w-40 space-x-2">
-
+                    <form
+                      onSubmit={(e) => {
+                        e.preventDefault();
+                        const q = search.trim();
+                        navigate(q ? `/search?q=${encodeURIComponent(q)}` : "/search");
+                      }}
+                      className="relative sm:w-72 w-40 space-x-2"
+                    >
                         <IoSearchOutline className="absolute inline-block left-3 inset-y-2" />
-
-                        <input type="text" placeholder="Search here"
-                            className="bg-[#EAEAEA] w-full py-1 md:px-8 px-6 rounded-md focus:outline-none"
+                        <input
+                          type="text"
+                          placeholder="Search here"
+                          value={search}
+                          onChange={(e) => setSearch(e.target.value)}
+                          className="bg-[#EAEAEA] w-full py-1 md:px-8 px-6 rounded-md focus:outline-none"
                         />
-                    </div>
+                    </form>
                 </div>
 
 
@@ -55,8 +70,9 @@ const Navbar = () => {
                         {
                             currentUser ? <>
                             <button onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
-                                <img src={avatarImg} alt="" className={`size-7 rounded-full ${currentUser ? 'ring-2 ring-blue-500' : ''}`} />
+                                <img src={avatarImg} alt="" className={`size-7 rounded-full object-cover ${currentUser ? 'ring-2 ring-blue-500' : ''}`} />
                             </button>
+
                             {/* show dropdowns */}
                             {
                                 isDropdownOpen && (
@@ -71,6 +87,10 @@ const Navbar = () => {
                                                     </li>
                                                 ))
                                             }
+                                            <li onClick={() => setIsDropdownOpen(false)}>
+                                                <Link to="/profile" className="block px-4 py-2 text-sm hover:bg-gray-100">Profile</Link>
+                                            </li>
+
                                             <li>
                                                 <button
                                                 onClick={handleLogOut}

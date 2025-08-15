@@ -1,15 +1,17 @@
 
-import { Outlet } from 'react-router-dom'
+import { Outlet, useLocation } from 'react-router-dom'
 import './App.css'
-import Navbar from './components/Navbar'
+import SimpleNavbar from './components/SimpleNavbar'
 import Footer from './components/Footer'
-import { AuthProvider } from './context/AuthContext'
+import UserMessage from './components/UserMessage'
+
 import { useEffect, useState } from 'react'
 import Loading from './components/Loading'
 
 function App() {
 
   const [loading, setLoading] = useState(true);
+  const location = useLocation();
 
   useEffect(() => {
 
@@ -25,17 +27,17 @@ function App() {
     return <Loading />;
   }
 
+  const path = location.pathname || '';
+  const hideFloating = path === '/contact-us' || path.startsWith('/dashboard');
 
   return (
     <>
-      <AuthProvider>
-        <Navbar />
-        <main className='min-h-screen max-w-screen-2xl mx-auto px-4 py-6 font-primary'>
-          <Outlet />
-        </main>
-        <Footer />
-      </AuthProvider>
-
+      <SimpleNavbar />
+      <main className='min-h-screen max-w-screen-2xl mx-auto px-4 py-6 font-primary'>
+        <Outlet />
+      </main>
+      <Footer />
+      {!hideFloating && <UserMessage />}
     </>
   )
 }

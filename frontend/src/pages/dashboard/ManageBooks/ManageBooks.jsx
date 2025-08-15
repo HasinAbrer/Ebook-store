@@ -1,10 +1,14 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { useDeleteBookMutation, useFetchAllBooksQuery } from '../../../redux/features/books/booksApi';
 import { Link } from 'react-router-dom';
 
 const ManageBooks = () => {
   // Get data from RTK Query
-  const { data, refetch } = useFetchAllBooksQuery();
+  const { token } = useSelector((state) => state.auth);
+  const { data, refetch } = useFetchAllBooksQuery(undefined, {
+    skip: !token,
+  });
   const [deleteBook] = useDeleteBookMutation();
 
   // Fix: Ensure books is always an array

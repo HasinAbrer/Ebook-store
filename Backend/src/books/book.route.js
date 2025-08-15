@@ -1,23 +1,21 @@
 const  express = require('express');
 const router = express.Router();
-const { postABook } = require("./book.controller");
-const { getAllBooks } = require("./book.controller");
-const { getSingleBook } = require("./book.controller");
-const { UpdateBook } = require("./book.controller");
-const { DeleteABook } = require("./book.controller");
+const { postABook, getAllBooks, getSingleBook, UpdateBook, DeleteABook, searchBooks, getTopBooks, getRecommendedBooks, getCategories } = require("./book.controller");
+const verifyToken = require('../middleware/verifyToken');
+const verifyAdmin = require('../middleware/verifyAdmin');
 
-const Book = require("./book.model");
-const { verify } = require('jsonwebtoken');
+// public
+router.get('/', getAllBooks);
+router.get('/search', searchBooks);
+router.get('/top', getTopBooks);
+router.get('/recommended', getRecommendedBooks);
+router.get('/categories', getCategories);
+router.get('/:id', getSingleBook);
 
-router.post("/create-book",verify, postABook);
-
-router.get("/",getAllBooks);
-
-router.get("/:id",getSingleBook);
-
-router.put("/edit/:id",verify, UpdateBook);
-
-router.delete("/delete/:id",verify, DeleteABook);
+// admin protected
+router.post('/create-book', verifyToken, verifyAdmin, postABook);
+router.put('/edit/:id', verifyToken, verifyAdmin, UpdateBook);
+router.delete('/delete/:id', verifyToken, verifyAdmin, DeleteABook);
 
 
 module.exports = router;

@@ -1,17 +1,18 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import getBaseUrl from '../../../utils/baseURL';
+import { auth } from '../../../firebase/firebase.config';
 
 
 const baseQuery = fetchBaseQuery({
   baseUrl: `${getBaseUrl()}/api/books`,
   credentials: 'include',
-  prepareHeaders: (Headers) => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      Headers.set('Authorization', `Bearer ${token}`);
+  prepareHeaders: async (headers, { getState }) => {
+    const token = getState().auth.token;
+      if (token) {
+        headers.set('Authorization', `Bearer ${token}`);
+      }
+      return headers;
     }
-    return Headers;
-  }
 })
 
 const booksApi = createApi({
@@ -21,7 +22,26 @@ const booksApi = createApi({
   endpoints: (builder) => ({
     fetchAllBooks: builder.query({
       query: () => "/",
+      transformResponse: (response) => response.books,
       providesTags: ["Books"]
+    }),
+    searchBooks: builder.query({
+      // params: { query, category, minPrice, maxPrice, sort, page, limit }
+      query: (params) => ({ url: `/search`, params }),
+      providesTags: ["Books"]
+    }),
+    fetchTopBooks: builder.query({
+      query: (limit = 10) => ({ url: `/top`, params: { limit } }),
+      providesTags: ["Books"]
+    }),
+    fetchRecommendedBooks: builder.query({
+      query: ({ category, limit = 10 } = {}) => ({ url: `/recommended`, params: { category, limit } }),
+      providesTags: ["Books"]
+    }),
+    fetchCategories: builder.query({
+      query: () => ({ url: `/categories` }),
+      transformResponse: (resp) => resp?.categories || [],
+      providesTags: ["Books"],
     }),
     fetchBookById: builder.query({
       query: (id) => `/${id}`,
@@ -56,6 +76,6 @@ const booksApi = createApi({
   })
 })
 
-export const { useFetchAllBooksQuery,useFetchBookByIdQuery,
-  useAddBookMutation,useUpdateBookMutation,useDeleteBookMutation } = booksApi;
+export const { useFetchAllBooksQuery, useSearchBooksQuery, useFetchTopBooksQuery, useFetchRecommendedBooksQuery, useFetchCategoriesQuery,
+  useFetchBookByIdQuery, useAddBookMutation, useUpdateBookMutation, useDeleteBookMutation } = booksApi;
 export default booksApi;
