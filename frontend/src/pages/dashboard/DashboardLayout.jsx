@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react'
 
 import Loading from '../../components/Loading';
 import { Link, Outlet, useNavigate, NavLink } from 'react-router-dom';
-import { FaUsers, FaShoppingBag, FaRegCommentDots, FaEnvelopeOpenText, FaCog } from 'react-icons/fa';
+import { FaUsers, FaShoppingBag, FaRegCommentDots, FaEnvelopeOpenText, FaCog, FaPlus, FaBook } from 'react-icons/fa';
+
 import { useDispatch, useSelector } from 'react-redux';
 import { setUser } from '../../redux/features/auth/authSlice';
 import { useGetMyProfileQuery } from '../../redux/features/profile/profileApi';
@@ -64,7 +65,17 @@ const DashboardLayout = () => {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
             </svg>
           </Link>
-          {/** Removed Add/Manage Books icons per request */}
+          {/* Add New Book button */}
+          <Link to="/dashboard/add-new-book" className="inline-flex items-center justify-center py-3 hover:text-gray-400 hover:bg-gray-700 focus:text-gray-400 focus:bg-gray-700 rounded-lg">
+            <span className="sr-only">Add New Book</span>
+            <FaPlus className="h-6 w-6" />
+          </Link>
+          {/* Manage/All Books (optional link) */}
+          <Link to="/dashboard/manage-books" className="inline-flex items-center justify-center py-3 hover:text-gray-400 hover:bg-gray-700 focus:text-gray-400 focus:bg-gray-700 rounded-lg">
+            <span className="sr-only">Books</span>
+            <FaBook className="h-6 w-6" />
+          </Link>
+
           <Link to="/dashboard/users" className="inline-flex items-center justify-center py-3 hover:text-gray-400 hover:bg-gray-700 focus:text-gray-400 focus:bg-gray-700 rounded-lg">
             <span className="sr-only">Users</span>
             <FaUsers className="h-6 w-6"/>
@@ -123,9 +134,15 @@ const DashboardLayout = () => {
             <h1 className="text-4xl font-semibold mb-2">Dashboard</h1>
             <h2 className="text-gray-600 ml-0.5">Book Store Inventory</h2>
           </div>
-          {/** Removed Add/Manage Books actions per request */}
+          {/* Quick Action: Add New Book */}
+          <div className="flex items-center gap-2">
+            <Link to="/dashboard/add-new-book" className="inline-flex items-center px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-500">
+              <FaPlus className="mr-2" /> Add New Book
+            </Link>
+          </div>
         </div>
-       <Outlet/>
+        
+        <Outlet/>
       </main>
     </div>
     {/** Admin floating chat removed per request */}

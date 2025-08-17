@@ -6,12 +6,12 @@ import BookCard from "../books/BookCard";
 
 const Recommended = () => {
   const FALLBACK_RECOMMENDED = [
-    { _id: 'rec-en-1', title: 'The Psychology of Money', description: 'Timeless lessons on wealth, greed, and happiness.', category: 'Finance', newPrice: 9.49, imageUrl: 'https://covers.openlibrary.org/b/id/12609263-L.jpg' },
-    { _id: 'rec-en-2', title: 'Rich Dad Poor Dad', description: 'What the rich teach their kids about money.', category: 'Finance', newPrice: 8.99, imageUrl: 'https://covers.openlibrary.org/b/id/8641702-L.jpg' },
-    { _id: 'rec-bn-1', title: 'হিমু (Himu)', description: 'হুমায়ূন আহমেদের কালজয়ী চরিত্র।', category: 'Bangla', newPrice: 4.99, imageUrl: 'https://covers.openlibrary.org/b/id/12721450-L.jpg' },
-    { _id: 'rec-en-3', title: 'The Midnight Library', description: 'Between life and death there is a library.', category: 'Fiction', newPrice: 7.99, imageUrl: 'https://covers.openlibrary.org/b/id/10584759-L.jpg' },
-    { _id: 'rec-bn-2', title: 'লালশালু (Lalsalu)', description: 'সৈয়দ ওয়ালীউল্লাহর শক্তিশালী উপন্যাস।', category: 'Bangla', newPrice: 4.79, imageUrl: 'https://covers.openlibrary.org/b/id/12721442-L.jpg' },
-    { _id: 'rec-en-4', title: 'The Kite Runner', description: 'A powerful story of friendship and redemption.', category: 'Fiction', newPrice: 7.49, imageUrl: 'https://covers.openlibrary.org/b/id/8235116-L.jpg' },
+    { _id: 'rec-en-1', title: 'The Psychology of Money', description: 'Timeless lessons on wealth, greed, and happiness.', category: 'Finance', newPrice: 9.49, imageUrl: '/images/books-21.png' },
+    { _id: 'rec-en-2', title: 'Rich Dad Poor Dad', description: 'What the rich teach their kids about money.', category: 'Finance', newPrice: 8.99, imageUrl: '/images/books-22.png' },
+    { _id: 'rec-bn-1', title: 'হিমু (Himu)', description: 'হুমায়ূন আহমেদের কালজয়ী চরিত্র।', category: 'Bangla', newPrice: 4.99, imageUrl: '/images/books-23.png' },
+    { _id: 'rec-en-3', title: 'The Midnight Library', description: 'Between life and death there is a library.', category: 'Fiction', newPrice: 7.99, imageUrl: '/images/books-24.png' },
+    { _id: 'rec-bn-2', title: 'লালশালু (Lalsalu)', description: 'সৈয়দ ওয়ালীউল্লাহর শক্তিশালী উপন্যাস।', category: 'Bangla', newPrice: 4.79, imageUrl: '/images/books-25.png' },
+    { _id: 'rec-en-4', title: 'The Kite Runner', description: 'A powerful story of friendship and redemption.', category: 'Fiction', newPrice: 7.49, imageUrl: '/images/books-26.png' },
   ];
   const { data, isLoading, isError } = useFetchRecommendedBooksQuery({ limit: 10 });
   const rec = Array.isArray(data?.items) ? data.items : [];

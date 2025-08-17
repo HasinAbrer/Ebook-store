@@ -14,7 +14,7 @@ export const FALLBACK_TOP = [
     description: 'হুমায়ূন আহমেদের জনপ্রিয় উপন্যাস।',
     category: 'Bangla',
     newPrice: 4.99,
-    imageUrl: 'https://covers.openlibrary.org/b/id/10523383-L.jpg',
+    imageUrl: '/images/books-1.png',
   }),
   fb({
     _id: 'bn-2',
@@ -22,7 +22,7 @@ export const FALLBACK_TOP = [
     description: 'বিভূতিভূষণ বন্দ্যোপাধ্যায়ের শ্রেষ্ঠ সৃষ্টি।',
     category: 'Bangla',
     newPrice: 5.99,
-    imageUrl: 'https://covers.openlibrary.org/b/id/8231991-L.jpg',
+    imageUrl: '/images/books-2.png',
   }),
   fb({
     _id: 'bn-3',
@@ -30,7 +30,7 @@ export const FALLBACK_TOP = [
     description: 'শরৎচন্দ্র চট্টোপাধ্যায়ের অমর প্রেমকাহিনী।',
     category: 'Bangla',
     newPrice: 3.99,
-    imageUrl: 'https://covers.openlibrary.org/b/id/12721448-L.jpg',
+    imageUrl: '/images/books-3.png',
   }),
   fb({
     _id: 'en-1',
@@ -38,7 +38,7 @@ export const FALLBACK_TOP = [
     description: 'A fable about following your dream by Paulo Coelho.',
     category: 'Fiction',
     newPrice: 7.99,
-    imageUrl: 'https://covers.openlibrary.org/b/id/11153227-L.jpg',
+    imageUrl: '/images/books-4.png',
   }),
   fb({
     _id: 'en-2',
@@ -46,7 +46,7 @@ export const FALLBACK_TOP = [
     description: 'Tiny changes, remarkable results by James Clear.',
     category: 'Self Help',
     newPrice: 9.99,
-    imageUrl: 'https://covers.openlibrary.org/b/id/12553507-L.jpg',
+    imageUrl: '/images/books-5.png',
   }),
   fb({
     _id: 'en-3',
@@ -54,7 +54,7 @@ export const FALLBACK_TOP = [
     description: 'The first book in the Harry Potter series.',
     category: 'Fantasy',
     newPrice: 8.99,
-    imageUrl: 'https://covers.openlibrary.org/b/id/7884866-L.jpg',
+    imageUrl: '/images/books-6.png',
   }),
   fb({
     _id: 'en-4',
@@ -62,7 +62,7 @@ export const FALLBACK_TOP = [
     description: 'A counterintuitive approach to living a good life.',
     category: 'Nonfiction',
     newPrice: 8.49,
-    imageUrl: 'https://covers.openlibrary.org/b/id/12600727-L.jpg',
+    imageUrl: '/images/books-7.png',
   }),
   fb({
     _id: 'en-5',
@@ -70,7 +70,7 @@ export const FALLBACK_TOP = [
     description: 'Yuval Noah Harari on the history of us.',
     category: 'History',
     newPrice: 10.99,
-    imageUrl: 'https://covers.openlibrary.org/b/id/8374142-L.jpg',
+    imageUrl: '/images/books-8.png',
   }),
   fb({
     _id: 'bn-4',
@@ -78,7 +78,7 @@ export const FALLBACK_TOP = [
     description: 'বঙ্কিমচন্দ্র চট্টোপাধ্যায়ের বিখ্যাত উপন্যাস।',
     category: 'Bangla',
     newPrice: 4.49,
-    imageUrl: 'https://covers.openlibrary.org/b/id/12721445-L.jpg',
+    imageUrl: '/images/books-9.png',
   }),
   fb({
     _id: 'bn-5',
@@ -86,7 +86,7 @@ export const FALLBACK_TOP = [
     description: 'সত্যজিৎ রায়ের গোয়েন্দা গল্প।',
     category: 'Bangla',
     newPrice: 6.99,
-    imageUrl: 'https://covers.openlibrary.org/b/id/10615051-L.jpg',
+    imageUrl: '/images/books-10.png',
   }),
   fb({
     _id: 'en-6',
@@ -94,7 +94,7 @@ export const FALLBACK_TOP = [
     description: 'Harper Lee\'s classic novel of justice and race.',
     category: 'Fiction',
     newPrice: 7.49,
-    imageUrl: 'https://covers.openlibrary.org/b/id/8228691-L.jpg',
+    imageUrl: '/images/books-11.png',
   }),
   fb({
     _id: 'en-7',
@@ -102,7 +102,7 @@ export const FALLBACK_TOP = [
     description: 'George Orwell\'s dystopian masterpiece.',
     category: 'Fiction',
     newPrice: 6.99,
-    imageUrl: 'https://covers.openlibrary.org/b/id/7222246-L.jpg',
+    imageUrl: '/images/books-12.png',
   }),
 ];
 
@@ -113,7 +113,7 @@ export const FALLBACK_RECOMMENDED = [
     description: 'Timeless lessons on wealth, greed, and happiness.',
     category: 'Finance',
     newPrice: 9.49,
-    imageUrl: 'https://covers.openlibrary.org/b/id/12609263-L.jpg',
+    imageUrl: '/images/books-21.png',
   }),
   fb({
     _id: 'rec-en-2',
@@ -121,7 +121,7 @@ export const FALLBACK_RECOMMENDED = [
     description: 'What the rich teach their kids about money.',
     category: 'Finance',
     newPrice: 8.99,
-    imageUrl: 'https://covers.openlibrary.org/b/id/8641702-L.jpg',
+    imageUrl: '/images/books-22.png',
   }),
   fb({
     _id: 'rec-bn-1',
@@ -129,7 +129,7 @@ export const FALLBACK_RECOMMENDED = [
     description: 'হুমায়ূন আহমেদের কালজয়ী চরিত্র।',
     category: 'Bangla',
     newPrice: 4.99,
-    imageUrl: 'https://covers.openlibrary.org/b/id/12721450-L.jpg',
+    imageUrl: '/images/books-23.png',
   }),
   fb({
     _id: 'rec-en-3',
@@ -137,7 +137,7 @@ export const FALLBACK_RECOMMENDED = [
     description: 'Between life and death there is a library.',
     category: 'Fiction',
     newPrice: 7.99,
-    imageUrl: 'https://covers.openlibrary.org/b/id/10584759-L.jpg',
+    imageUrl: '/images/books-24.png',
   }),
   fb({
     _id: 'rec-bn-2',
@@ -145,7 +145,7 @@ export const FALLBACK_RECOMMENDED = [
     description: 'সৈয়দ ওয়ালীউল্লাহর শক্তিশালী উপন্যাস।',
     category: 'Bangla',
     newPrice: 4.79,
-    imageUrl: 'https://covers.openlibrary.org/b/id/12721442-L.jpg',
+    imageUrl: '/images/books-25.png',
   }),
   fb({
     _id: 'rec-en-4',
@@ -153,6 +153,6 @@ export const FALLBACK_RECOMMENDED = [
     description: 'A powerful story of friendship and redemption.',
     category: 'Fiction',
     newPrice: 7.49,
-    imageUrl: 'https://covers.openlibrary.org/b/id/8235116-L.jpg',
+    imageUrl: '/images/books-26.png',
   }),
 ];

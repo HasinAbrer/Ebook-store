@@ -10,13 +10,13 @@ const port = process.env.PORT || 5000;
 
 //middlewares
 app.use(express.json());
-// CORS: allow dev origins and auth headers
+
 const whitelist = [
   'http://localhost:5174',
   'http://localhost:5173',
   'http://127.0.0.1:5173',
   'http://127.0.0.1:5174',
-  'http://localhost:4173', // vite preview
+  'http://localhost:4173', // egula cors  er whitelist
   'http://127.0.0.1:4173',
 ];
 app.use(cors({
@@ -31,12 +31,13 @@ app.use(cors({
   allowedHeaders: ['Content-Type', 'Authorization', 'Cache-Control', 'Pragma', 'Expires'],
   credentials: true,
 }));
-// Preflight handling
+
 app.options('*', cors());
 
-// Serve static image directories if present
+
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-app.use('/images', express.static(path.join(__dirname, 'images')));
+// Serve images directly from src/images so developers can drop files there
+app.use('/images', express.static(path.join(__dirname, 'src', 'images')));
 
 //routes
 const bookRoutes = require("./src/books/book.route");
@@ -60,12 +61,12 @@ app.use("/api/reviews", reviewRoutes);
 app.use("/api/messages", messageRoutes);
 app.use("/api/uploads", uploadRoutes);
 
-// Test route
+// Test route hisebe use korbo
 app.get("/", (req, res) => {
   res.json({ message: "Book Store Server is running!" });
 });
 
-// Error Handling middleware
+// Error Handling middleware er jonnne
 app.use(notFound);
 app.use(errorHandler);
 

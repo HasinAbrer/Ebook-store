@@ -13,7 +13,6 @@ module.exports = function verifyToken(req, res, next) {
     req.user = {
       id: decoded.id,
       username: decoded.username,
-      // Our JWT currently doesn't include email; treat username as email when email is absent
       email: decoded.email || decoded.username,
       role: decoded.role
     };

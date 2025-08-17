@@ -40,7 +40,7 @@ router.get('/me', verifyToken, async (req, res) => {
   }
 });
 
-// DEBUG: list indexes on users collection (do not expose in production)
+// DEBUGGING er jonnne: list indexes on users collection (do not expose in production)
 router.get('/indexes', async (req, res) => {
   try {
     const indexes = await User.collection.indexes();
@@ -51,7 +51,7 @@ router.get('/indexes', async (req, res) => {
   }
 });
 
-// DEBUG: check users matching a username (case-insensitive)
+// DEBUGGING er jonnne: check users matching a username (case-insensitive)
 router.get('/debug/:username', async (req, res) => {
   try {
     const raw = req.params.username || '';
@@ -73,7 +73,6 @@ router.post("/admin", async (req, res) => {
     let {username, password} = req.body;
     username = typeof username === 'string' ? username.trim().toLowerCase() : '';
     try {
-        // Case-insensitive lookup to support legacy mixed-case usernames
     const admin =  await User.findOne({ username: { $regex: `^${escapeRegex(username)}$`, $options: 'i' } });
         if(!admin) {
             return res.status(404).send({message: "Admin not found!"})

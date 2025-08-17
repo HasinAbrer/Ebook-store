@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { useDeleteBookMutation, useFetchAllBooksQuery } from '../../../redux/features/books/booksApi';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 const ManageBooks = () => {
   // Get data from RTK Query
@@ -11,8 +11,12 @@ const ManageBooks = () => {
   });
   const [deleteBook] = useDeleteBookMutation();
 
-  // Fix: Ensure books is always an array
-  const books = data?.data || [];
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  const trendingOnly = params.get('trending') === '1';
+  // Ensure books is always an array and apply filter if trending-only
+  const allBooks = data?.data || [];
+  const books = trendingOnly ? allBooks.filter((b) => b?.trending) : allBooks;
 
   // Handle deleting a book
   const handleDeleteBook = async (id) => {
@@ -33,15 +37,18 @@ const ManageBooks = () => {
           <div className="rounded-t mb-0 px-4 py-3 border-0">
             <div className="flex flex-wrap items-center">
               <div className="relative w-full px-4 max-w-full flex-grow flex-1">
-                <h3 className="font-semibold text-base text-blueGray-700">All Books</h3>
+                <h3 className="font-semibold text-base text-blueGray-700">{trendingOnly ? 'Trending Books' : 'All Books'}</h3>
+                {trendingOnly && (
+                  <p className="text-xs text-gray-500">Showing books marked as trending</p>
+                )}
               </div>
               <div className="relative w-full px-4 max-w-full flex-grow flex-1 text-right">
-                <button
+                <Link
+                  to="/dashboard/manage-books"
                   className="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded"
-                  type="button"
                 >
                   See all
-                </button>
+                </Link>
               </div>
             </div>
           </div>

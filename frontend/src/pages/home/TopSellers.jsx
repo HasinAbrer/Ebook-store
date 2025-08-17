@@ -6,18 +6,18 @@ import { useFetchTopBooksQuery, useFetchCategoriesQuery } from "../../redux/feat
 const TopSellers = () => {
 
   const FALLBACK_TOP = [
-    { _id: 'bn-1', title: 'শঙ্খনীল কারাগার (Shonkhonil Karagar)', description: 'হুমায়ূন আহমেদের জনপ্রিয় উপন্যাস।', category: 'Bangla', newPrice: 4.99, imageUrl: 'https://covers.openlibrary.org/b/id/10523383-L.jpg' },
-    { _id: 'bn-2', title: 'পথের পাঁচালী (Pather Panchali)', description: 'বিভূতিভূষণ বন্দ্যোপাধ্যায়ের শ্রেষ্ঠ সৃষ্টি।', category: 'Bangla', newPrice: 5.99, imageUrl: 'https://covers.openlibrary.org/b/id/8231991-L.jpg' },
-    { _id: 'bn-3', title: 'দেবদাস (Devdas)', description: 'শরৎচন্দ্র চট্টোপাধ্যায়ের অমর প্রেমকাহিনী।', category: 'Bangla', newPrice: 3.99, imageUrl: 'https://covers.openlibrary.org/b/id/12721448-L.jpg' },
-    { _id: 'en-1', title: 'The Alchemist', description: 'A fable about following your dream by Paulo Coelho.', category: 'Fiction', newPrice: 7.99, imageUrl: 'https://covers.openlibrary.org/b/id/11153227-L.jpg' },
-    { _id: 'en-2', title: 'Atomic Habits', description: 'Tiny changes, remarkable results by James Clear.', category: 'Self Help', newPrice: 9.99, imageUrl: 'https://covers.openlibrary.org/b/id/12553507-L.jpg' },
-    { _id: 'en-3', title: "Harry Potter and the Sorcerer's Stone", description: 'The first book in the Harry Potter series.', category: 'Fantasy', newPrice: 8.99, imageUrl: 'https://covers.openlibrary.org/b/id/7884866-L.jpg' },
-    { _id: 'en-4', title: 'The Subtle Art of Not Giving a F*ck', description: 'A counterintuitive approach to living a good life.', category: 'Nonfiction', newPrice: 8.49, imageUrl: 'https://covers.openlibrary.org/b/id/12600727-L.jpg' },
-    { _id: 'en-5', title: 'Sapiens: A Brief History of Humankind', description: 'Yuval Noah Harari on the history of us.', category: 'History', newPrice: 10.99, imageUrl: 'https://covers.openlibrary.org/b/id/8374142-L.jpg' },
-    { _id: 'bn-4', title: 'কপালকুণ্ডলা (Kapal Kundala)', description: 'বঙ্কিমচন্দ্র চট্টোপাধ্যায়ের বিখ্যাত উপন্যাস।', category: 'Bangla', newPrice: 4.49, imageUrl: 'https://covers.openlibrary.org/b/id/12721445-L.jpg' },
-    { _id: 'bn-5', title: 'ফেলুদা সমগ্র (Feluda Omnibus)', description: 'সত্যজিৎ রায়ের গোয়েন্দা গল্প।', category: 'Bangla', newPrice: 6.99, imageUrl: 'https://covers.openlibrary.org/b/id/10615051-L.jpg' },
-    { _id: 'en-6', title: 'To Kill a Mockingbird', description: "Harper Lee's classic novel of justice and race.", category: 'Fiction', newPrice: 7.49, imageUrl: 'https://covers.openlibrary.org/b/id/8228691-L.jpg' },
-    { _id: 'en-7', title: '1984', description: "George Orwell's dystopian masterpiece.", category: 'Fiction', newPrice: 6.99, imageUrl: 'https://covers.openlibrary.org/b/id/7222246-L.jpg' },
+    { _id: 'bn-1', title: 'শঙ্খনীল কারাগার (Shonkhonil Karagar)', description: 'হুমায়ূন আহমেদের জনপ্রিয় উপন্যাস।', category: 'Bangla', newPrice: 4.99, imageUrl: '/images/books-1.png' },
+    { _id: 'bn-2', title: 'পথের পাঁচালী (Pather Panchali)', description: 'বিভূতিভূষণ বন্দ্যোপাধ্যায়ের শ্রেষ্ঠ সৃষ্টি।', category: 'Bangla', newPrice: 5.99, imageUrl: '/images/books-2.png' },
+    { _id: 'bn-3', title: 'দেবদাস (Devdas)', description: 'শরৎচন্দ্র চট্টোপাধ্যায়ের অমর প্রেমকাহিনী।', category: 'Bangla', newPrice: 3.99, imageUrl: '/images/books-3.png' },
+    { _id: 'en-1', title: 'The Alchemist', description: 'A fable about following your dream by Paulo Coelho.', category: 'Fiction', newPrice: 7.99, imageUrl: '/images/books-4.png' },
+    { _id: 'en-2', title: 'Atomic Habits', description: 'Tiny changes, remarkable results by James Clear.', category: 'Self Help', newPrice: 9.99, imageUrl: '/images/books-5.png' },
+    { _id: 'en-3', title: "Harry Potter and the Sorcerer's Stone", description: 'The first book in the Harry Potter series.', category: 'Fantasy', newPrice: 8.99, imageUrl: '/images/books-6.png' },
+    { _id: 'en-4', title: 'The Subtle Art of Not Giving a F*ck', description: 'A counterintuitive approach to living a good life.', category: 'Nonfiction', newPrice: 8.49, imageUrl: '/images/books-7.png' },
+    { _id: 'en-5', title: 'Sapiens: A Brief History of Humankind', description: 'Yuval Noah Harari on the history of us.', category: 'History', newPrice: 10.99, imageUrl: '/images/books-8.png' },
+    { _id: 'bn-4', title: 'কপালকুণ্ডলা (Kapal Kundala)', description: 'বঙ্কিমচন্দ্র চট্টোপাধ্যায়ের বিখ্যাত উপন্যাস।', category: 'Bangla', newPrice: 4.49, imageUrl: '/images/books-9.png' },
+    { _id: 'bn-5', title: 'ফেলুদা সমগ্র (Feluda Omnibus)', description: 'সত্যজিৎ রায়ের গোয়েন্দা গল্প।', category: 'Bangla', newPrice: 6.99, imageUrl: '/images/books-10.png' },
+    { _id: 'en-6', title: 'To Kill a Mockingbird', description: "Harper Lee's classic novel of justice and race.", category: 'Fiction', newPrice: 7.49, imageUrl: '/images/books-11.png' },
+    { _id: 'en-7', title: '1984', description: "George Orwell's dystopian masterpiece.", category: 'Fiction', newPrice: 6.99, imageUrl: '/images/books-12.png' },
   ];
 
   const [selectedCategory, setSelectedCategory] = useState("Choose a genre");
